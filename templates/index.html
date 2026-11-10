@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Чистый город</title>
+</head>
+<body>
+    <h1>Сообщения о граффити</h1>
+    <ul>
+        {% for r in reports %}
+            <li>
+                {{ r.address }} — статус {{ r.status }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

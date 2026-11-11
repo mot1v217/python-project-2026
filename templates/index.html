@@ -9,7 +9,8 @@
     <ul>
         {% for r in reports %}
             <li>
-                {{ r.address }} — статус {{ r.status }}
+                <a href="/report/{{ r.id }}">{{ r.address }}</a>
+                — статус <strong>{{ r.status_name }}</strong>
             </li>
         {% endfor %}
     </ul>

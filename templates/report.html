@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщение {{ report.id }}</title>
+</head>
+<body>
+    <h1>Сообщение №{{ report.id }}</h1>
+    <p><strong>Адрес:</strong> {{ report.address }}</p>
+    <p>
+        <img src="/static/{{ report.photo_path }}" alt="Фото" style="max-width: 400px;">
+    </p>
+    <p><strong>Статус:</strong> {{ report.status_name }}</p>
+    <p><strong>Дата:</strong> {{ report.date }}</p>
+    <p><strong>Комментарий:</strong> {{ report.comment }}</p>
+    <a href="/">← Назад к списку</a>
+</body>
+</html>

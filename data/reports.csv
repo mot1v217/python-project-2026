@@ -1,4 +1,4 @@
 id,address,district_id,photo_path,date,status,resolved_date,comment
-1,"Карла Маркса, 9А",1,images/Photo1.jfif,2024-09-15,2,2024-09-20,Реклама слева от входа
-2,"Ленина, 22",1,images/Photo2.jfif,2024-09-18,1,,Между окнами
-3,"Свердлова, 15",1,images/Photo3.jfif,2024-09-20,0,,На колонне
+1,"Карла Маркса, 9А",1,uploads/Photo1.jfif,2024-09-15,2,2024-09-20,Реклама слева от входа
+2,"Ленина, 22",1,uploads/Photo2.jfif,2024-09-18,1,,Между окнами
+3,"Свердлова, 15",1,uploads/Photo3.jfif,2024-09-20,0,,На колонне

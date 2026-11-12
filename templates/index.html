@@ -10,9 +10,11 @@
         {% for r in reports %}
             <li>
                 <a href="/report/{{ r.id }}">{{ r.address }}</a>
-                — статус <strong>{{ r.status_name }}</strong>
+                — статус <strong>{{ r.status.status_name }}</strong>
             </li>
+
         {% endfor %}
     </ul>
+    <p><a href="/export/reports.csv">📥 Скачать CSV</a></p>
 </body>
 </html>

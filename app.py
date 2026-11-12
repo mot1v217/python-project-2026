@@ -1,33 +1,53 @@
 from flask import Flask, render_template
-import pandas as pd
-import json
-
+import csv
+from io import StringIO, BytesIO
+from flask import send_file
 
 app = Flask(__name__)
 
-def load_reports_with_statuses():
-    """Читает CSV и JSON, объединяет по статусу, возвращает DataFrame."""
-    reports = pd.read_csv("data/reports.csv")
-    
-    with open("data/statuses.json", encoding="utf-8") as f:
-        statuses = json.load(f)
-    statuses_df = pd.DataFrame(statuses)
-    statuses_df = statuses_df.rename(columns={"id": "status_id"})
-    
-    merged = reports.merge(statuses_df, left_on="status", right_on="status_id", how="left")
-    merged["status_name"] = merged["status_name"].fillna("неизвестно")
-    return merged
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+from models import db, Report
+db.init_app(app)
 
 @app.route("/")
 def index():
-    reports = load_reports_with_statuses()
-    return render_template("index.html", reports=reports.to_dict("records"))
+    reports = Report.query.all()
+    return render_template("index.html", reports=reports)
 
 @app.route("/report/<int:report_id>")
 def report_detail(report_id):
-    reports = load_reports_with_statuses()
-    report = reports[reports["id"] == report_id].iloc[0]
-    return render_template("report.html", report=report.to_dict())
+    report = Report.query.get_or_404(report_id)
+    return render_template("report.html", report=report)
+
+@app.route("/export/reports.csv")
+def export_reports():
+    reports = Report.query.all()
+    
+    output = StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["id", "address", "district", "status", "date", "resolved_date", "comment"])
+    
+    for r in reports:
+        writer.writerow([
+            r.id,
+            r.address,
+            r.district.name if r.district else "",
+            r.status.status_name if r.status else "",
+            r.date,
+            r.resolved_date or "",
+            r.comment or "",
+        ])
+    
+    bytes_output = BytesIO(output.getvalue().encode("utf-8"))
+    
+    return send_file(
+        bytes_output,
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name="reports.csv",
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -14,6 +14,17 @@
     <p><strong>Дата:</strong> {{ report.date }}</p>
     <p><strong>Округ:</strong> {{ report.district.name }}</p>
     <p><strong>Комментарий:</strong> {{ report.comment }}</p>
+    <p><strong>Координаты:</strong> 
+    {% if report.lat and report.lon %}
+        {{ report.lat }}, {{ report.lon }}
+        <br>
+        <a href="https://yandex.ru/maps/?ll={{ report.lon }},{{ report.lat }}&z=17&pt={{ report.lon }},{{ report.lat }}" target="_blank">
+            📍 Открыть на карте
+        </a>
+    {% else %}
+        Не определены
+    {% endif %}
+</p>
     <a href="/">← Назад к списку</a>
 </body>
 </html>

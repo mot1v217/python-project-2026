@@ -6,14 +6,25 @@
 </head>
 <body>
     <h1>Сообщения о граффити</h1>
+    <p>
+    <a href="/report/add" style="display:inline-block; padding:10px; background:green; color:white; text-decoration:none;">
+        + Добавить сообщение
+    </a>
+</p>
     <ul>
         {% for r in reports %}
-            <li>
-                <a href="/report/{{ r.id }}">{{ r.address }}</a>
-                — статус <strong>{{ r.status.status_name }}</strong>
-            </li>
-
-        {% endfor %}
+    <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 15px;">
+        <!-- Миниатюра -->
+        <img src="/static/{{ r.photo_path }}" alt="Фото" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
+        
+        <!-- Текст -->
+        <div>
+            <a href="/report/{{ r.id }}" style="font-size: 18px; font-weight: bold;">{{ r.address }}</a><br>
+            <span>Округ: {{ r.district.name }}</span><br>
+            <span>Статус: <strong>{{ r.status.status_name }}</strong></span>
+        </div>
+    </li>
+{% endfor %}
     </ul>
     <p><a href="/export/reports.csv">📥 Скачать CSV</a></p>
 </body>
